@@ -43,8 +43,8 @@ let found = false;  // Kedinin bulunma durumunu temsil eder.
 const showCard = (imgId) =>{
     const index = Math.floor(Math.random()*img.length) // images listesinde rastgele resim indexi seçer.
 
-    document.getElementById(imgId).src = img[index].src; // seçilen resim uzantısını gönderilen resim id sinin uzantısı ile değiştirir.
-    document.getElementById(imgId).onclick = null;  // resimin tıklanılabilirligini kaldırır.
+    document.getElementById(imgId).src = img[index].src; // Seçilen resim uzantısını gönderilen resim id sinin uzantısı ile değiştirir.
+    document.getElementById(imgId).onclick = null;  // Resimin tıklanılabilirligini kaldırır.
 
     if (img[index].class === "cat" && img.length  > 1){
         // Rastgele seçilen resmin kedi olması ve halen images listesinde 1 den fazla eleman olup olmadığı kontrolü.
