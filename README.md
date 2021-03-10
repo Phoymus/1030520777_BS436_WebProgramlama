@@ -1,4 +1,4 @@
-Öğrenci Numarası: 1030510777
+Öğrenci Numarası: 1030520777
 
 Öğrenci Adı: Osman İncir
 
