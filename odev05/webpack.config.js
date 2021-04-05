@@ -23,7 +23,8 @@ module.exports ={
     },
     devServer: {
         contentBase:'./public',
-        injectClient:false
+        injectClient:false,
+        port:"3030"
     },
     output: {
         filename: "bundle.js",
