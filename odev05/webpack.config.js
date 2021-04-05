@@ -2,7 +2,7 @@ const path = require("path");
 const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports ={
-    entry: './src/index.jsx',
+    entry: './src/client/index.jsx',
     module:{
         rules: [{
             test: /\.jsx?$/,
@@ -23,8 +23,7 @@ module.exports ={
     },
     devServer: {
         contentBase:'./public',
-        injectClient:false,
-        port:"3030"
+        injectClient:false
     },
     output: {
         filename: "bundle.js",
