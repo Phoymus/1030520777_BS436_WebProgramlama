@@ -43,8 +43,6 @@ export class Game extends Component {
             cards:newCards,
             chances: chances-1
         });
-
-
     }
 
     render(){
