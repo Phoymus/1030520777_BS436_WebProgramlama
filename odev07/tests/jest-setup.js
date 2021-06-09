@@ -19,6 +19,7 @@ export function setUpDomEnvironment(url) {
     global.window = window;
     global.document = window.document;
     global.navigator = {userAgent: 'node.js'};
+
     copyProps(window, global);
 
     configure({ adapter: new Adapter() });
@@ -33,5 +34,7 @@ function copyProps(src, target) {
         }), {});
     Object.defineProperties(target, props);
 }
+
 setUpDomEnvironment('http://localhost:80/');
+
 

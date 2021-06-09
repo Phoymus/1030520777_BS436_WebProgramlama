@@ -1,56 +1,74 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+
 const passport = require('passport');
-const session = require('express-session');
+const session = require("express-session");
 const LocalStrategy = require('passport-local').Strategy;
 const Users = require('./db/users');
+
+const WsHandler = require('./ws-handler');
+
+
 const app = express();
+
 const authApi = require('./routes/auth-api');
 
+app.use(express.static('public'));
+
+//JSON için
+app.use(bodyParser.json());
+
+WsHandler.init(app);
+
+
+//passport, session vs.
 app.use(session({
-    secret: "cookie key",
+    secret: 'cookie sifrelenirken kullanialcak secret key',
     resave: false,
-    saveUninitialized:false,
+    saveUninitialized: false
 }));
 
-passport.use(new LocalStrategy({
-    usernameField:'userId',
-    passwordField:'password'
-},(userId, password, done)=>{
-    const ok = Users.verifyUser(userId,password);
+passport.use(new LocalStrategy(
+    {
+        usernameField: 'userId',
+        passwordField: 'password'
+    },
+    function (userId, password, done) {
 
-    if(!ok){
-        return done(null, false, {message:'Geçersiz kullanıcı adı/şifre'});
+        const ok = Users.verifyUser(userId, password);
+
+        if (!ok) {
+            return done(null, false, {message: 'Invalid username/password'});
+        }
+
+        const user = Users.getUser(userId);
+        return done(null, user);
     }
+));
 
-    const user = Users.getUser(userId);
-    return done(null, user);
-}));
 
-passport.serializeUser((user, done)=>{
-    done(null,user.id);
+passport.serializeUser(function (user, done) {
+    done(null, user.id);
 });
 
-passport.deserializeUser((id, done)=>{
+passport.deserializeUser(function (id, done) {
+
     const user = Users.getUser(id);
 
-    if(user){
+    if (user) {
         done(null, user);
-    }else {
+    } else {
         done(null, false);
     }
 });
 
-app.use(passport.initialize());
 
+app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(bodyParser.json());
-
-app.use('/api', authApi);
-
-app.use(express.static('public'));
+// Route
+app.use('/api',authApi);
 
 
 app.use((req, res, next) => {

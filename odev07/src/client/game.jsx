@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {Link} from "react-router-dom";
 
 export class Game extends Component {
     constructor(props) {
@@ -45,13 +44,26 @@ export class Game extends Component {
         });
     }
 
+    newGame = () => {
+        this.setState({
+            cardIndex: Math.floor(Math.random()*3),
+            chances: 2,
+            catFound: false,
+            cards : ["./img/card.png","./img/card.png","./img/card.png"],
+            won:null,
+            lost:null
+
+        })
+    }
+
     render(){
         if(this.state.won){
+
             return (
                 <div>
                     <h2>Kazandın !</h2>
                     <img className={"card"} src={"./img/img1.jpg"}  alt={"cat"}/><br/>
-                    <Link center="true" to={"/home"} className={"play"}>Yeni Oyun</Link>
+                    <button center="true" onClick={this.newGame} className={"play"}>Yeni Oyun</button>
                 </div>
             );
         }
@@ -59,7 +71,7 @@ export class Game extends Component {
             return (
                 <div>
                     <h2>Kaybettin :( Kedi'yi bulamadın.</h2>
-                    <Link to={"/home"} className={"play"}>Yeni Oyun</Link>
+                    <button center="true" onClick={this.newGame} className={"play"}>Yeni Oyun</button>
                 </div>
             );
         }
